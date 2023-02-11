@@ -102,19 +102,32 @@ function spawnEnemies(){
     },1000)
 }
 
-
+let animationID
 function animate(){
-    requestAnimationFrame(animate)
+    animationID =  requestAnimationFrame(animate)
     c.clearRect(0, 0,canvas.width, canvas.height)
     player.draw()
     projectiles.forEach((projectile) => {
         projectile.update()
 
     })
-    enemies.forEach((enemy) => {
+    enemies.forEach((enemy, index) => {
         enemy.update()
-        projectiles.forEach(projectile => {
+        const dist =   Math.hypot(player.x - enemy.x, player.y - enemy.y)
+
+        if (dist - enemy.radius - player.radius < 1) {
+            cancelAnimationFrame(animationID)
+        }
+
+        projectiles.forEach((projectile,projectileIndex) => {
           const dist =   Math.hypot(projectile.x - enemy.x, projectile.y - enemy.y)
+          if (dist - enemy.radius - projectile.radius < 1) {
+            setTimeout(()=>{
+                enemies.splice(index,1)
+                projectiles.splice(projectileIndex,1)
+            },0)
+           
+          }
         })
     })
 }
