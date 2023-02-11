@@ -5,7 +5,7 @@ canvas.width = innerWidth
 canvas.height = innerHeight
 
 const scoreEl = document.querySelector('#scoreEL')
-
+const startGame = document.querySelector('#startGame')
 class Player{
     constructor(x,y,radius,color){
         this.x = x
@@ -177,10 +177,6 @@ function animate(){
           // when projectile toutch enemy
           if (dist - enemy.radius - projectile.radius < 1) {
 
-            /// increase score
-            score += 100 
-            scoreEl.innerHTML = score
-            console.log(score)
 
                // create explosion
             for (let i = 0; i < enemy.radius * 2; i++) {
@@ -191,6 +187,10 @@ function animate(){
                 
             }
             if(enemy.radius - 10 > 10){
+                /// increase score
+            score += 100 
+            scoreEl.innerHTML = score
+
                gsap.to(enemy, {
                 radius : enemy.radius - 10
                })
@@ -198,6 +198,9 @@ function animate(){
                     projectiles.splice(projectileIndex,1)
                 },0)
             }else{
+                //// remove from scene alltogether
+                score += 250 
+                scoreEl.innerHTML = score
                 setTimeout(()=>{
                     enemies.splice(index,1)
                     projectiles.splice(projectileIndex,1)
@@ -209,8 +212,7 @@ function animate(){
         })
     })
 }
-animate()
-spawnEnemies()
+
 
 window.addEventListener('click', (event)=> {
     const angle = Math.atan2(
@@ -232,4 +234,9 @@ projectiles.push(
 )
    
     
+})
+
+startGame.addEventListener('click', ()=> {
+    animate()
+    spawnEnemies()
 })
