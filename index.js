@@ -4,6 +4,8 @@ console.log("1")
 canvas.width = innerWidth
 canvas.height = innerHeight
 
+const scoreEl = document.querySelector('#scoreEL')
+
 class Player{
     constructor(x,y,radius,color){
         this.x = x
@@ -66,7 +68,7 @@ class Enemy {
         this.y = this.y + this.velocity.y
     }
 }
-
+const friction = 0.99
 class Particle {
     constructor(x,y,radius,color , velocity){
     this.x = x
@@ -89,6 +91,8 @@ class Particle {
 
     update(){
         this.draw()
+        this.velocity.x *= friction
+        this.velocity.y *= friction
         this.x = this.x + this.velocity.x
         this.y = this.y + this.velocity.y
         this.alpha -= 0.01
@@ -132,6 +136,8 @@ function spawnEnemies(){
 }
 
 let animationID
+let score = 0
+
 function animate(){
     animationID =  requestAnimationFrame(animate)
     c.fillStyle = 'rgba(0,0,0,0.1)'
@@ -170,12 +176,16 @@ function animate(){
 
           // when projectile toutch enemy
           if (dist - enemy.radius - projectile.radius < 1) {
-            for (let i = 0; i < 8; i++) {
 
-                // create explosion
+            /// increase score
+            score += 100
+            scoreEl.innerHTML = score
+            
+               // create explosion
+            for (let i = 0; i < enemy.radius * 2; i++) {
                 particles.push(new Particle(projectile.x , projectile.y , Math.random() * 2, enemy.color, {
-                    x : Math.random() - 0.5,   
-                    y : Math.random() - 0.5,
+                    x : (Math.random() - 0.5)* Math.random() * 4,   
+                    y : (Math.random() - 0.5)* Math.random() * 4,
                 }))
                 
             }
