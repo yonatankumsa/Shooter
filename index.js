@@ -174,7 +174,7 @@ function animate(){
 
                 // create explosion
                 particles.push(new Particle(projectile.x , projectile.y , Math.random() * 2, enemy.color, {
-                    x : Math.random() - 0.5,
+                    x : Math.random() - 0.5,   
                     y : Math.random() - 0.5,
                 }))
                 
