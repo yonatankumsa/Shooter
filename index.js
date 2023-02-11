@@ -76,7 +76,7 @@ const enemies = []
 
 function spawnEnemies(){
     setInterval(()=>{
-        const radius = Math.random() * (30 - 4 ) + 4
+        const radius = Math.random() * (35 - 10) + 10
         let x 
         let y
         if(Math.random() < 0.5){
@@ -121,7 +121,7 @@ function animate(){
     enemies.forEach((enemy, index) => {
         enemy.update()
         const dist =   Math.hypot(player.x - enemy.x, player.y - enemy.y)
-
+        // end game
         if (dist - enemy.radius - player.radius < 1 ) {
             cancelAnimationFrame(animationID)
         }
@@ -131,7 +131,7 @@ function animate(){
 
           // when projectile toutch enemy
           if (dist - enemy.radius - projectile.radius < 1) {
-            if(enemy.radius - 10 > 15){
+            if(enemy.radius - 10 > 10){
                gsap.to(enemy, {
                 radius : enemy.radius - 10
                })
