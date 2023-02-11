@@ -131,10 +131,20 @@ function animate(){
 
           // when projectile toutch enemy
           if (dist - enemy.radius - projectile.radius < 1) {
-            setTimeout(()=>{
-                enemies.splice(index,1)
-                projectiles.splice(projectileIndex,1)
-            },0)
+            if(enemy.radius - 10 > 15){
+               gsap.to(enemy, {
+                radius : enemy.radius - 10
+               })
+                setTimeout(()=>{
+                    projectiles.splice(projectileIndex,1)
+                },0)
+            }else{
+                setTimeout(()=>{
+                    enemies.splice(index,1)
+                    projectiles.splice(projectileIndex,1)
+                },0)
+            }
+            
            
           }
         })
