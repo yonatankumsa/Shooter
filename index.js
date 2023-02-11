@@ -178,9 +178,10 @@ function animate(){
           if (dist - enemy.radius - projectile.radius < 1) {
 
             /// increase score
-            score += 100
+            score += 100 
             scoreEl.innerHTML = score
-            
+            console.log(score)
+
                // create explosion
             for (let i = 0; i < enemy.radius * 2; i++) {
                 particles.push(new Particle(projectile.x , projectile.y , Math.random() * 2, enemy.color, {
